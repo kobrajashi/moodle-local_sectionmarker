@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>local_sectionmarker · Strukturtest</title>
+<style>
+ body{font:14px/1.5 system-ui;margin:20px;max-width:1000px}
+ .course-content ul{list-style:none;padding-left:14px}
+ li.activity{border:1px solid #bbb;border-radius:6px;margin:8px 0;padding:8px}
+ li.modtype_subsection{border-color:#36c;background:#f6f8ff}
+ .dropdown-menu{border:1px dashed #ccc;padding:4px;margin:4px 0;font-size:12px}
+ pre{background:#111;color:#eee;padding:12px;border-radius:6px;white-space:pre-wrap}
+ .sectionmarker-info{outline:2px solid #39f}
+ .sectionmarker-achtung{outline:2px solid #fc3}
+ .sectionmarker-ok{outline:2px solid #3c6}
+</style>
+</head>
+<body>
+<h1>Strukturtest</h1>
+<p>Regressionstest zum Fehler „erstes Element einer Subsection zeigt den Markerblock
+doppelt und faerbt beim Anklicken den ganzen Abschnitt" (behoben in 1.0.2).
+Die Seite laedt das gebaute AMD-Modul mit Moodle-Attrappen und prueft die
+Menue-Injektion gegen nachgebautes Kursmarkup. Lokal ueber einen Webserver
+oeffnen, z.&nbsp;B. <code>python3 -m http.server</code> im Plugin-Verzeichnis.</p>
+
+<div class="course-content">
+ <ul class="section">
+
+  <!-- A: gewöhnliche Aktivität auf oberster Ebene -->
+  <li class="activity activity-wrapper label modtype_label" id="module-101" data-id="101">
+    <div class="activity-item">
+      <div class="activity-actions"><ul class="dropdown-menu" data-wem="101"><li><a class="dropdown-item">Edit settings</a></li></ul></div>
+      <div>Freistehendes Label</div>
+    </div>
+  </li>
+
+  <!-- B: Subsection, deren eigenes Menue NICHT auf unsere Selektoren passt
+          (so sieht es im Kurs aus: Menue im Abschnittskopf) -->
+  <li class="activity activity-wrapper subsection modtype_subsection" id="module-200" data-id="200">
+    <div class="section-item">
+      <h3>Abschnitt 1.1</h3>
+      <div class="section-actions"><ul class="dropdown-menu" data-wem="200-eigen"><li><a class="dropdown-item">Edit section</a></li></ul></div>
+    </div>
+    <ul class="section">
+      <li class="activity activity-wrapper label modtype_label" id="module-201" data-id="201">
+        <div class="activity-item">
+          <div class="activity-actions"><ul class="dropdown-menu" data-wem="201"><li><a class="dropdown-item">Edit settings</a></li></ul></div>
+          <div>asdasd (erstes Element der Subsection)</div>
+        </div>
+      </li>
+      <li class="activity activity-wrapper label modtype_label" id="module-202" data-id="202">
+        <div class="activity-item">
+          <div class="activity-actions"><ul class="dropdown-menu" data-wem="202"><li><a class="dropdown-item">Edit settings</a></li></ul></div>
+          <div>asdasd (zweites Element)</div>
+        </div>
+      </li>
+    </ul>
+  </li>
+
+  <!-- C: Subsection, die ein eigenes .activity-actions-Menue besitzt -->
+  <li class="activity activity-wrapper subsection modtype_subsection" id="module-300" data-id="300">
+    <div class="activity-item">
+      <div class="activity-actions"><ul class="dropdown-menu" data-wem="300-eigen"><li><a class="dropdown-item">Edit section</a></li></ul></div>
+      <h3>Abschnitt 1.2</h3>
+    </div>
+    <ul class="section">
+      <li class="activity activity-wrapper label modtype_label" id="module-301" data-id="301">
+        <div class="activity-item">
+          <div class="activity-actions"><ul class="dropdown-menu" data-wem="301"><li><a class="dropdown-item">Edit settings</a></li></ul></div>
+          <div>erstes Element der zweiten Subsection</div>
+        </div>
+      </li>
+    </ul>
+  </li>
+
+ </ul>
+</div>
+
+<h2>Ergebnis</h2>
+<pre id="ausgabe">läuft …</pre>
+
+<script>
+// --- Moodle-Stubs ------------------------------------------------------------
+window.__factory = null;
+window.define = function(name, deps, factory) { window.__factory = factory; };
+const Ajax = {calls: [], call(reqs) { Ajax.calls.push(reqs[0]); return [Promise.resolve({success: true})]; }};
+const Notification = {exception: (e) => { window.__fehler = String(e); }};
+const Str = {get_strings: () => Promise.resolve(['Markiere: Info', 'Markiere: Hinweis', 'Markiere: Erfolgreich', 'Markierung entfernen'])};
+</script>
+<script src="../../amd/build/sectionmarker.min.js"></script>
+<script>
+(async () => {
+  const mod = window.__factory(Ajax, Notification, Str);
+  // Vorhandene Marker: 201 ist markiert, 200 (Subsection) ebenfalls – so wie es
+  // durch den alten Fehler in der Datenbank stehen kann.
+  await mod.init(99, {'201': 'info', '200': 'achtung'}, true);
+  await new Promise(r => setTimeout(r, 120));
+
+  const zeilen = [];
+  const pruef = [];
+
+  document.querySelectorAll('.dropdown-menu').forEach(m => {
+    const n = m.querySelectorAll('.sectionmarker-item').length;
+    zeilen.push(`Menü ${String(m.dataset.wem).padEnd(10)} → ${n/4} Markerblock(e)  (${n} Einträge)`);
+  });
+
+  const bloecke = (wem) => document.querySelector(`[data-wem="${wem}"]`).querySelectorAll('.sectionmarker-item').length / 4;
+
+  pruef.push(['Freistehendes Label hat genau einen Block', bloecke('101') === 1]);
+  pruef.push(['Erstes Element der Subsection hat genau einen Block', bloecke('201') === 1]);
+  pruef.push(['Zweites Element hat genau einen Block', bloecke('202') === 1]);
+  pruef.push(['Subsection-Menü (eigenes) bleibt leer', bloecke('200-eigen') === 0]);
+  pruef.push(['Subsection mit eigenem activity-actions bleibt leer', bloecke('300-eigen') === 0]);
+  pruef.push(['Erstes Element der zweiten Subsection: ein Block', bloecke('301') === 1]);
+
+  const sub = document.getElementById('module-200');
+  pruef.push(['Subsection wird nicht eingefärbt',
+      !sub.className.match(/sectionmarker-/) &&
+      ![...sub.querySelectorAll('*')].some(e => e.className && String(e.className).match(/sectionmarker-/) &&
+          e.closest('.activity[data-id]') === sub)]);
+
+  const kind = document.querySelector('#module-201 .activity-item');
+  pruef.push(['Markiertes Kind trägt seine Farbe', kind.classList.contains('sectionmarker-info')]);
+
+  // Klick auf den Marker des ersten Kindes: cmid muss 201 sein, nicht 200.
+  const ziel = document.querySelector('[data-wem="201"] .sectionmarker-item');
+  ziel.click();
+  await new Promise(r => setTimeout(r, 60));
+  const letzter = Ajax.calls[Ajax.calls.length - 1];
+  pruef.push([`Klick sendet cmid 201 (gesendet: ${letzter && letzter.args.cmid})`,
+      letzter && letzter.args.cmid === 201]);
+
+  const fehler = pruef.filter(([, ok]) => !ok);
+  document.getElementById('ausgabe').textContent =
+      zeilen.join('\n') + '\n\n' +
+      pruef.map(([t, ok]) => (ok ? '  OK   ' : '  FEHL ') + t).join('\n') +
+      `\n\n${fehler.length === 0 ? 'ALLE PRÜFUNGEN BESTANDEN' : fehler.length + ' FEHLGESCHLAGEN'}` +
+      (window.__fehler ? '\nAusnahme: ' + window.__fehler : '');
+  window.__ergebnis = {bestanden: fehler.length === 0, fehler: fehler.map(f => f[0])};
+})();
+</script>
+</body>
+</html>

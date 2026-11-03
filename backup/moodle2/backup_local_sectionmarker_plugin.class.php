@@ -27,13 +27,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Adds the colour marker of a course module to its backup.
  */
 class backup_local_sectionmarker_plugin extends backup_local_plugin {
-
     /**
      * Attach the marker to the structure of every backed-up course module.
      *

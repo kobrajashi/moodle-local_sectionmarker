@@ -22,8 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Upgrade the plugin.
  *
@@ -51,7 +49,7 @@ function xmldb_local_sectionmarker_upgrade(int $oldversion): bool {
 
         // ------------------------------------------------------------------
         // 2. Drop the FK key on sectionid (required before dropping the column
-        //    in MySQL/InnoDB where FK constraints are enforced at DB level).
+        // in MySQL/InnoDB where FK constraints are enforced at DB level).
         // ------------------------------------------------------------------
         if ($dbman->field_exists($table, new xmldb_field('sectionid'))) {
             try {

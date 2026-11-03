@@ -33,19 +33,22 @@ use core_external\external_value;
  * Web service to set (insert or update) a course-module colour marker.
  */
 class set_marker extends external_api {
-
     /**
+     * Describes the parameters of the function.
+     *
      * @return external_function_parameters
      */
     public static function execute_parameters(): external_function_parameters {
         return new external_function_parameters([
-            'courseid' => new external_value(PARAM_INT,   'ID of the course'),
-            'cmid'     => new external_value(PARAM_INT,   'ID of the course module (mdl_course_modules.id)'),
+            'courseid' => new external_value(PARAM_INT, 'ID of the course'),
+            'cmid'     => new external_value(PARAM_INT, 'ID of the course module (mdl_course_modules.id)'),
             'marker'   => new external_value(PARAM_ALPHA, 'Marker type: info, note, or ok'),
         ]);
     }
 
     /**
+     * Sets the marker of a course module.
+     *
      * @param int    $courseid
      * @param int    $cmid
      * @param string $marker
@@ -103,6 +106,8 @@ class set_marker extends external_api {
     }
 
     /**
+     * Describes the return value of the function.
+     *
      * @return external_single_structure
      */
     public static function execute_returns(): external_single_structure {

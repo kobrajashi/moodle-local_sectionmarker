@@ -34,19 +34,14 @@ use core_privacy\local\request\contextlist;
 use core_privacy\local\request\userlist;
 use core_privacy\local\request\writer;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy provider implementation.
  */
 class provider implements
     \core_privacy\local\metadata\provider,
-    \core_privacy\local\request\plugin\provider,
-    \core_privacy\local\request\core_userlist_provider {
-
-    // -------------------------------------------------------------------------
+    \core_privacy\local\request\core_userlist_provider,
+    \core_privacy\local\request\plugin\provider {
     // Metadata.
-    // -------------------------------------------------------------------------
 
     /**
      * Describe what data this plugin stores.
@@ -70,9 +65,7 @@ class provider implements
         return $collection;
     }
 
-    // -------------------------------------------------------------------------
     // Contextlist (which contexts contain data for a given user).
-    // -------------------------------------------------------------------------
 
     /**
      * Get contexts containing data for the given user.
@@ -97,9 +90,7 @@ class provider implements
         return $contextlist;
     }
 
-    // -------------------------------------------------------------------------
     // Userlist (which users have data in a given context).
-    // -------------------------------------------------------------------------
 
     /**
      * Get users who have data within a given context.
@@ -120,9 +111,7 @@ class provider implements
         $userlist->add_from_sql('userid', $sql, ['courseid' => $context->instanceid]);
     }
 
-    // -------------------------------------------------------------------------
     // Export user data.
-    // -------------------------------------------------------------------------
 
     /**
      * Export personal data for a given user in a given set of contexts.
@@ -164,9 +153,7 @@ class provider implements
         }
     }
 
-    // -------------------------------------------------------------------------
     // Delete user data.
-    // -------------------------------------------------------------------------
 
     /**
      * Delete data for all users in a given context.

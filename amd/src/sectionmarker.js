@@ -122,11 +122,15 @@ const buildDivider = () => {
 
 const buildItem = (emoji, label, onClick) => {
     const li = document.createElement('li');
-    const a  = document.createElement('a');
-    a.className   = 'dropdown-item sectionmarker-item';
-    a.href        = '#';
+    const a = document.createElement('a');
+    a.className = 'dropdown-item sectionmarker-item';
+    a.href = '#';
     a.textContent = `${emoji} ${label}`;
-    a.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); onClick(); });
+    a.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onClick();
+    });
     li.appendChild(a);
     return li;
 };
@@ -146,7 +150,7 @@ const findDropdownMenu = (activityEl) => findOwn(activityEl, [
 // Web service calls
 // ---------------------------------------------------------------------------
 
-const handleMarkerClick = async (courseId, cmId, marker) => {
+const handleMarkerClick = async(courseId, cmId, marker) => {
     try {
         if (marker) {
             await Ajax.call([{
@@ -177,7 +181,7 @@ const injectItemsToActivity = (courseId, activityEl, strings) => {
     if (!dropdownMenu) {
         return;
     }
-    // cmid = the activity element's own data-id: <li data-id="42" id="module-42">
+    // Cmid = the activity element's own data-id: <li data-id="42" id="module-42">
     const cmId = parseInt(activityEl.dataset.id, 10);
     if (!cmId) {
         return;
@@ -194,10 +198,10 @@ const injectItemsToActivity = (courseId, activityEl, strings) => {
     dropdownMenu.appendChild(buildDivider());
 
     [
-        {marker: 'info',    emoji: '🔵', label: strings[0]},
+        {marker: 'info', emoji: '🔵', label: strings[0]},
         {marker: 'note', emoji: '🟡', label: strings[1]},
-        {marker: 'ok',      emoji: '🟢', label: strings[2]},
-        {marker: null,      emoji: '❌', label: strings[3]},
+        {marker: 'ok', emoji: '🟢', label: strings[2]},
+        {marker: null, emoji: '❌', label: strings[3]},
     ].forEach(({marker, emoji, label}) =>
         dropdownMenu.appendChild(buildItem(emoji, label, () => handleMarkerClick(courseId, cmId, marker)))
     );
@@ -261,7 +265,7 @@ const observeColorUpdates = (markers) => {
 // Entry point
 // ---------------------------------------------------------------------------
 
-export const init = async (courseId, markers, isEditMode) => {
+export const init = async(courseId, markers, isEditMode) => {
     applyAllMarkers(markers);
     observeColorUpdates(markers); // Re-apply colours when activities load dynamically.
     if (!isEditMode) {
@@ -270,10 +274,10 @@ export const init = async (courseId, markers, isEditMode) => {
     let strings;
     try {
         strings = await getStrings([
-            {key: 'mark_info',    component: 'local_sectionmarker'},
+            {key: 'mark_info', component: 'local_sectionmarker'},
             {key: 'mark_note', component: 'local_sectionmarker'},
-            {key: 'mark_ok',      component: 'local_sectionmarker'},
-            {key: 'remove_mark',  component: 'local_sectionmarker'},
+            {key: 'mark_ok', component: 'local_sectionmarker'},
+            {key: 'remove_mark', component: 'local_sectionmarker'},
         ]);
     } catch (err) {
         Notification.exception(err);

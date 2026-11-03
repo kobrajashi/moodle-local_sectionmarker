@@ -25,13 +25,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Restores the colour marker of a course module.
  */
 class restore_local_sectionmarker_plugin extends restore_local_plugin {
-
     /**
      * Declare the path we expect inside each module's backup.
      *

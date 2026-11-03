@@ -33,8 +33,9 @@ use core_external\external_value;
  * Web service to remove a course-module colour marker.
  */
 class remove_marker extends external_api {
-
     /**
+     * Describes the parameters of the function.
+     *
      * @return external_function_parameters
      */
     public static function execute_parameters(): external_function_parameters {
@@ -45,6 +46,8 @@ class remove_marker extends external_api {
     }
 
     /**
+     * Removes the marker of a course module.
+     *
      * @param int $courseid
      * @param int $cmid
      * @return array
@@ -76,6 +79,8 @@ class remove_marker extends external_api {
     }
 
     /**
+     * Describes the return value of the function.
+     *
      * @return external_single_structure
      */
     public static function execute_returns(): external_single_structure {

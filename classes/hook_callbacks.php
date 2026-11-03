@@ -24,13 +24,10 @@
 
 namespace local_sectionmarker;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Hook callback handler class.
  */
 class hook_callbacks {
-
     /**
      * Hook: \core\hook\output\before_standard_head_html_generation
      *

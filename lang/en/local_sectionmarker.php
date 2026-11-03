@@ -24,27 +24,18 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// Core plugin strings.
-$string['pluginname'] = 'Section marker';
-
-// Action-menu items.
-$string['mark_info']    = 'Mark: Info';
+$string['mark_info'] = 'Mark: Info';
 $string['mark_note'] = 'Mark: Note';
-$string['mark_ok']      = 'Mark: Successful';
-$string['remove_mark']  = 'Remove marking';
-
-// Feedback messages returned by web services.
-$string['marker_set']     = 'Section marking has been set.';
+$string['mark_ok'] = 'Mark: Successful';
 $string['marker_removed'] = 'Section marking has been removed.';
-
-// Capability string.
-$string['sectionmarker:manage'] = 'Manage section markers';
-
-// Privacy API strings.
-$string['privacy:metadata']                             = 'The section marker plugin stores which sections have been marked and who last changed them.';
-$string['privacy:metadata:local_sectionmarker']         = 'Section marker records';
-$string['privacy:metadata:local_sectionmarker:courseid']     = 'The ID of the course containing the section.';
-$string['privacy:metadata:local_sectionmarker:cmid']         = 'The ID of the marked course module.';
-$string['privacy:metadata:local_sectionmarker:marker']       = 'The marker type applied (info, note, ok).';
+$string['marker_set'] = 'Section marking has been set.';
+$string['pluginname'] = 'Section marker';
+$string['privacy:metadata'] = 'The section marker plugin stores which sections have been marked and who last changed them.';
+$string['privacy:metadata:local_sectionmarker'] = 'Section marker records';
+$string['privacy:metadata:local_sectionmarker:cmid'] = 'The ID of the marked course module.';
+$string['privacy:metadata:local_sectionmarker:courseid'] = 'The ID of the course containing the section.';
+$string['privacy:metadata:local_sectionmarker:marker'] = 'The marker type applied (info, note, ok).';
 $string['privacy:metadata:local_sectionmarker:timemodified'] = 'The time the marker was last changed.';
 $string['privacy:metadata:local_sectionmarker:usermodified'] = 'The ID of the user who last changed the marker.';
+$string['remove_mark'] = 'Remove marking';
+$string['sectionmarker:manage'] = 'Manage section markers';

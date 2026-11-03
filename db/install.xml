@@ -9,7 +9,7 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" COMMENT="ID of the course"/>
         <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" COMMENT="ID from course_modules table"/>
-        <FIELD NAME="marker" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="" COMMENT="Marker type: info, achtung, ok, or empty"/>
+        <FIELD NAME="marker" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="" COMMENT="Marker type: info, note, ok, or empty"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" COMMENT="Timestamp of last modification"/>
         <FIELD NAME="usermodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" COMMENT="ID of the user who last modified this record"/>
       </FIELDS>

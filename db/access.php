@@ -18,7 +18,7 @@
  * Capability definitions for local_sectionmarker.
  *
  * @package    local_sectionmarker
- * @copyright  2025 Your Name <you@example.com>
+ * @copyright  2025 Tobias Sanders
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

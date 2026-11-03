@@ -18,7 +18,7 @@
  * External function: set or update a module (activity) marker.
  *
  * @package    local_sectionmarker
- * @copyright  2025 Your Name <you@example.com>
+ * @copyright  2025 Tobias Sanders
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -41,7 +41,7 @@ class set_marker extends external_api {
         return new external_function_parameters([
             'courseid' => new external_value(PARAM_INT,   'ID of the course'),
             'cmid'     => new external_value(PARAM_INT,   'ID of the course module (mdl_course_modules.id)'),
-            'marker'   => new external_value(PARAM_ALPHA, 'Marker type: info, achtung, or ok'),
+            'marker'   => new external_value(PARAM_ALPHA, 'Marker type: info, note, or ok'),
         ]);
     }
 
@@ -60,7 +60,7 @@ class set_marker extends external_api {
             'marker'   => $marker,
         ]);
 
-        $allowedmarkers = ['info', 'achtung', 'ok'];
+        $allowedmarkers = ['info', 'note', 'ok'];
         if (!in_array($params['marker'], $allowedmarkers, true)) {
             throw new \invalid_parameter_exception(
                 'Invalid marker value "' . $params['marker'] . '". Allowed: ' . implode(', ', $allowedmarkers)

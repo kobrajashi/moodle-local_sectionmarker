@@ -18,18 +18,18 @@
  * English language strings for local_sectionmarker.
  *
  * @package    local_sectionmarker
- * @copyright  2025 Your Name <you@example.com>
+ * @copyright  2025 Tobias Sanders
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 // Core plugin strings.
-$string['pluginname'] = 'Section Marker';
+$string['pluginname'] = 'Section marker';
 
 // Action-menu items.
 $string['mark_info']    = 'Mark: Info';
-$string['mark_achtung'] = 'Mark: Note';
+$string['mark_note'] = 'Mark: Note';
 $string['mark_ok']      = 'Mark: Successful';
 $string['remove_mark']  = 'Remove marking';
 
@@ -41,10 +41,10 @@ $string['marker_removed'] = 'Section marking has been removed.';
 $string['sectionmarker:manage'] = 'Manage section markers';
 
 // Privacy API strings.
-$string['privacy:metadata']                             = 'The Section Marker plugin stores which sections have been marked and who last changed them.';
+$string['privacy:metadata']                             = 'The section marker plugin stores which sections have been marked and who last changed them.';
 $string['privacy:metadata:local_sectionmarker']         = 'Section marker records';
 $string['privacy:metadata:local_sectionmarker:courseid']     = 'The ID of the course containing the section.';
 $string['privacy:metadata:local_sectionmarker:cmid']         = 'The ID of the marked course module.';
-$string['privacy:metadata:local_sectionmarker:marker']       = 'The marker type applied (info, achtung, ok).';
+$string['privacy:metadata:local_sectionmarker:marker']       = 'The marker type applied (info, note, ok).';
 $string['privacy:metadata:local_sectionmarker:timemodified'] = 'The time the marker was last changed.';
 $string['privacy:metadata:local_sectionmarker:usermodified'] = 'The ID of the user who last changed the marker.';

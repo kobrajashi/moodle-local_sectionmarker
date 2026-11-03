@@ -21,7 +21,7 @@
  * the module structure and writes it against the newly created cmid.
  *
  * @package    local_sectionmarker
- * @copyright  2025 Your Name <you@example.com>
+ * @copyright  2025 Tobias Sanders
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -56,9 +56,14 @@ class restore_local_sectionmarker_plugin extends restore_local_plugin {
 
         $data = (object) $data;
 
+        // Backups made before 1.0.3 use the old value 'achtung' for notes.
+        if ($data->marker === 'achtung') {
+            $data->marker = 'note';
+        }
+
         // Only the three known values are written; anything else is dropped
         // rather than ending up in the database unchecked.
-        if (!in_array($data->marker, ['info', 'achtung', 'ok'], true)) {
+        if (!in_array($data->marker, ['info', 'note', 'ok'], true)) {
             return;
         }
 

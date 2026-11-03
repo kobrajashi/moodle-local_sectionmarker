@@ -20,7 +20,7 @@
  * not whole sections.
  *
  * @module     local_sectionmarker/sectionmarker
- * @copyright  2025 Your Name <you@example.com>
+ * @copyright  2025 Tobias Sanders
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,10 +28,10 @@ import Ajax from 'core/ajax';
 import Notification from 'core/notification';
 import {get_strings as getStrings} from 'core/str';
 
-const MARKER_CLASSES = ['sectionmarker-info', 'sectionmarker-achtung', 'sectionmarker-ok'];
+const MARKER_CLASSES = ['sectionmarker-info', 'sectionmarker-note', 'sectionmarker-ok'];
 const MARKERS = {
     info:    {cssClass: 'sectionmarker-info'},
-    achtung: {cssClass: 'sectionmarker-achtung'},
+    note: {cssClass: 'sectionmarker-note'},
     ok:      {cssClass: 'sectionmarker-ok'},
 };
 const INJECTED_ATTR = 'data-sectionmarker-injected';
@@ -195,7 +195,7 @@ const injectItemsToActivity = (courseId, activityEl, strings) => {
 
     [
         {marker: 'info',    emoji: '🔵', label: strings[0]},
-        {marker: 'achtung', emoji: '🟡', label: strings[1]},
+        {marker: 'note', emoji: '🟡', label: strings[1]},
         {marker: 'ok',      emoji: '🟢', label: strings[2]},
         {marker: null,      emoji: '❌', label: strings[3]},
     ].forEach(({marker, emoji, label}) =>
@@ -271,7 +271,7 @@ export const init = async (courseId, markers, isEditMode) => {
     try {
         strings = await getStrings([
             {key: 'mark_info',    component: 'local_sectionmarker'},
-            {key: 'mark_achtung', component: 'local_sectionmarker'},
+            {key: 'mark_note', component: 'local_sectionmarker'},
             {key: 'mark_ok',      component: 'local_sectionmarker'},
             {key: 'remove_mark',  component: 'local_sectionmarker'},
         ]);

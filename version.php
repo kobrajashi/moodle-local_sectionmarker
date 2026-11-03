@@ -18,14 +18,14 @@
  * Plugin version definition.
  *
  * @package    local_sectionmarker
- * @copyright  2025 Your Name <you@example.com>
+ * @copyright  2025 Tobias Sanders
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_sectionmarker';
-$plugin->version   = 2026102200; // 1.0.2 – backup/restore support; one marker menu per activity
-$plugin->requires  = 2025051900; // Moodle 5.1
+$plugin->version   = 2026102700; // 1.0.3 – marker value "achtung" renamed to "note".
+$plugin->requires  = 2025100600; // Moodle 5.1.
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.0.2';
+$plugin->release   = '1.0.3';

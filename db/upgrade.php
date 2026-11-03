@@ -18,7 +18,7 @@
  * Upgrade steps for local_sectionmarker.
  *
  * @package    local_sectionmarker
- * @copyright  2025 Your Name <you@example.com>
+ * @copyright  2025 Tobias Sanders
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -91,6 +91,13 @@ function xmldb_local_sectionmarker_upgrade(int $oldversion): bool {
         }
 
         upgrade_plugin_savepoint(true, 2025051901, 'local', 'sectionmarker');
+    }
+
+    if ($oldversion < 2026102700) {
+        // Rename the German marker value 'achtung' to 'note'.
+        $DB->set_field('local_sectionmarker', 'marker', 'note', ['marker' => 'achtung']);
+
+        upgrade_plugin_savepoint(true, 2026102700, 'local', 'sectionmarker');
     }
 
     return true;
